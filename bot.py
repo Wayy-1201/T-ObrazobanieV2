@@ -20,8 +20,6 @@ if not config.OPENROUTER_API_KEY:
 
 db.init_db()
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode=None)
-db.init_db()
-bot = telebot.TeleBot(BOT_TOKEN, parse_mode=None)
 
 #Состояние пользователей ──────────────────────────────────────────────────
 
