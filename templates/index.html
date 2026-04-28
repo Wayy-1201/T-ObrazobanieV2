@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="static/imgs/users_api/monetka.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Т-Detective</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+
+*{  margin:0;
+    padding:0;
+    box-sizing:
+    border-box;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+
+:root{
+  --bg-main:#000;
+  --bg-panel:#141414;
+  --bg-card:#1e1e1e;
+  --bg-footer:#1a1a1a;  
+  --border-card:#333;
+  --accent-yellow:#ffd500;
+  --accent-gold:#ffcc00;
+  --text-primary:#fff;
+  --text-secondary:#aaa;
+  --success:#4CAF50;
+  --error:#f44336;
+  --gradient-main:linear-gradient(135deg,#ffd500,#ff9100);
+  --glow-yellow:0 -10px 25px rgba(255, 213, 0, 0.2);
+  --radius-view:40px;
+  --radius-card:20px;
+  --radius-pill:30px;
+  --font:'Nunito',sans-serif;
+}
+
+body{
+  background:var(--bg-main);
+  color:var(--text-primary);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  width:100%;
+  font-family:var(--font);
+  overflow:hidden;
+}
+
+img{
+    width:100%; 
+    height: auto;
+    object-fit: contain;
+}
+a{  font-weight:bold;
+    text-decoration:none;
+    color:inherit;
+}
+
+.all{
+  position:relative;
+  width:100%;
+  max-width:500px;
+  background:var(--bg-main);
+  height:100vh;
+  color:var(--text-primary);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  box-shadow: 5px 0 5px var(--gradient-main);
+}
+
+
+.for_nav{
+
+    width:100%;
+    display:flex;justify-content:center;
+    padding: 10px 0;
+}
+nav{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  height:50px;
+  text-align:center;
+  align-items:center;
+  padding:0 20px;
+}
+.user-info, .users_stars_div{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.user-avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--gradient-main);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  font-weight:800;
+  color:#000;
+  box-shadow: 0 0 10px rgba(255, 213, 0, 0.3);
+}
+.user-name{
+    font-size:15px;
+    font-weight:700;
+}
+.user-stars{
+    font-size:24px;
+    font-weight:900;
+    color: var(--accent-yellow);
+}
+.starsss_img i{
+    font-size:22px;
+    color:var(--accent-gold);
+}
+
+.models-container{
+    position:relative;
+    flex:1;
+    overflow:hidden;
+}
+.model-view{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:calc(100vh - 140px);
+  background:var(--bg-panel);
+  border-radius:var(--radius-view) var(--radius-view) 0 0;
+  border-top:2px solid var(--accent-yellow);
+  transform:translateY(100%);
+  transition:transform 0.5s cubic-bezier(.17,.84,.44,1);
+  color:var(--text-primary);
+  z-index:10;
+  overflow-y:auto;
+}
+
+.model-view::-webkit-scrollbar{display:none;}
+
+.model-view.active-view{
+  transform:translateY(0);
+  box-shadow:var(--glow-yellow);
+}
+
+.model-content{
+    padding:25px 20px 100px;
+    display:flex; 
+    flex-direction:column;
+    gap:20px;
+}
+
+
+.promo-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-card);
+    padding: 20px;
+    border: 1px solid var(--border-card);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.promo-card h2 { 
+    font-size: 15px; 
+    line-height: 1.4;
+    color: #eee;
+}
+
+.promo-header {
+    display: flex;
+    justify-content:
+    space-between; 
+    align-items: 
+    center; 
+    gap: 15px; 
+}
+.promo-img-wrapper { 
+    width: 70px; 
+    height: 70px; 
+    flex-shrink: 0; 
+    background: #2a2a2a; 
+    border-radius: 12px; 
+    padding: 10px; 
+}
+
+.promo-buy-btn {
+    background: var(--accent-yellow);
+    border: none;
+    border-radius: 15px;
+    padding: 14px;
+    color: #000;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+    transition: .2s;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.service-link-card {
+    background: var(--bg-card);
+    padding: 20px 15px;
+    border-radius: var(--radius-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    border: 1px solid var(--border-card);
+    transition: 0.2s;
+}
+.service-link-card:active { 
+    transform: scale(0.95); 
+    background: #252525; 
+}
+.service-icon {
+    width: 50px; 
+    height: 50px;
+    background: rgba(255, 213, 0, 0.1);
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 24px; 
+    color: var(--accent-yellow);
+}
+.service-link-card h5 { 
+    font-size: 14px;
+    font-weight: 700; 
+}
+
+
+.for_footer{ 
+    background:var(--bg-footer); 
+    width:100%; 
+    border-top: 1px solid #222; 
+}
+footer{ 
+    display:flex; 
+    padding:10px 5px 15px; 
+    justify-content:space-around; 
+    width:100%; 
+}
+footer a{
+  padding:1px; 
+  position:relative; 
+  color:var(--text-secondary);
+  display:flex; 
+  flex-direction:column; 
+  align-items:center;
+  min-width:100px; 
+  transition:.3s; 
+  gap:5px;
+}
+footer a img { 
+    width: 22px; 
+    height: 22px; 
+    filter: grayscale(1); 
+    opacity: 0.6; 
+}
+footer a h4{
+    font-size:12px; 
+    font-weight:600;
+}
+footer a.active{ 
+    color: var(--accent-yellow); 
+}
+footer a.active img { 
+    filter: grayscale(0);
+     opacity: 1; 
+}
+
+.game-notification{
+  position:fixed; 
+  top:30px; 
+  left:50%; 
+  transform:translateX(-50%);
+  padding:12px 25px; 
+  border-radius:var(--radius-pill);
+  font-weight:700; 
+  font-size:14px; 
+  z-index:9999;
+  animation:notifFade 2s forwards; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+
+@keyframes notifFade{
+  0%{opacity:0; transform:translateX(-50%) translateY(-20px);}
+  20%{opacity:1; transform:translateX(-50%) translateY(0);}
+  80%{opacity:1;}
+  100%{opacity:0; transform:translateX(-50%) translateY(-20px);}
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+</style>
+<body>
+<div class="all" id="gameRoot">
+
+    <div class="for_nav">
+        <nav id="nav_user">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar"></div> <!--из бд-->
+                <div class="user-name" id="userName">зАГРУЗКА</div> <!--из бд-->
+            </div>
+            <div class="users_stars_div">
+                <div class="user-stars" id="userStars">0</div> <!--из бд-->
+                <div class="starsss_img"><i class="fa-solid fa-coins"></i></div> 
+            </div>
+        </nav>
+    </div>
+
+    <div class="models-container">
+
+        <div id="model_view_1" class="model-view active-view" data-view="1">
+            <div class="model-content">
+                
+                <div class="promo-card">
+                    <div class="promo-header">
+                        <h2>Промокод на <b>Т-Мобайл</b>. Неограниченно за <span style="color:var(--accent-yellow)">1 Т-Коин</span></h2>
+                        <div class="promo-img-wrapper">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3616/3616230.png" alt="sim">
+                        </div>
+                    </div>
+                    <button class="promo-buy-btn" data-promo="tmobile">Получить промокод</button>
+                </div>
+
+                <div class="promo-card">
+                    <div class="promo-header">
+                        <h2>Подписка на <b>ЛитРес</b> за <span style="color:var(--accent-yellow)">1 Т-Коин</span></h2>
+                        <div class="promo-img-wrapper">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3308/3308312.png" alt="book">
+                        </div>
+                    </div>
+                    <button class="promo-buy-btn" data-promo="books">Получить промокод</button>
+                </div>
+
+                <div class="promo-card">
+                    <div class="promo-header">
+                        <h2>Повышенный <b>Кешбэк</b>. 3% на всё за <span style="color:var(--accent-yellow)">1 Т-Коин</span></h2>
+                        <div class="promo-img-wrapper">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1999/1999152.png" alt="cashback">
+                        </div>
+                    </div>
+                    <button class="promo-buy-btn" data-promo="cashback">Получить промокод</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="model_view_2" class="model-view" data-view="2">
+            <div class="model-content">
+                <h3 style="text-align: center; margin-bottom: 5px;">Сервисы Т-Банка</h3>
+                <p style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-bottom: 10px;">Быстрый доступ к экосистеме</p>
+                
+                <div class="services-grid">
+                    <a href="https://www.tbank.ru/bank/" class="service-link-card">
+                        <div class="service-icon"><i class="fa-solid fa-building-columns"></i></div>
+                        <h5>Т-Банк</h5>
+                    </a>
+                    <a href="https://www.tbank.ru/invest/" class="service-link-card">
+                        <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <h5>Инвестиции</h5>
+                    </a>
+                    <a href="https://www.tbank.ru/insurance/" class="service-link-card">
+                        <div class="service-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h5>Страхование</h5>
+                    </a>
+                    <a href="https://www.tbank.ru/travel/" class="service-link-card">
+                        <div class="service-icon"><i class="fa-solid fa-plane"></i></div>
+                        <h5>Путешествия</h5>
+                    </a>
+                    <a href="https://www.tbank.ru/entertainment/" class="service-link-card">
+                        <div class="service-icon"><i class="fa-solid fa-ticket"></i></div>
+                        <h5>Город</h5>
+                    </a>
+                    <a href="https://www.tbank.ru/mobile/" class="service-link-card">
+                        <div class="service-icon"><i class="fa-solid fa-sim-card"></i></div>
+                        <h5>Мобайл</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="for_footer">
+        <footer id="footer">
+            <a href="#" class="active" data-view="1">
+                <img src="https://cdn-icons-png.flaticon.com/512/726/726448.png" alt="promo">
+                <h4>Промокоды</h4>
+            </a>
+            <a href="#" data-view="2">
+                <img src="https://cdn-icons-png.flaticon.com/512/10007/10007883.png" alt="bank">
+                <h4>Сервисы</h4>
+            </a>
+        </footer>
+    </div>
+</div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+
+let currentUserId = null;
+
+function showNotification(text, isGood) {
+    const n = document.createElement('div');
+    n.className = 'game-notification';
+    n.textContent = text;
+    n.style.background = isGood ? 'var(--success)' : 'var(--error)';
+    n.style.color = '#fff';
+    document.body.appendChild(n);
+    setTimeout(() => n.remove(), 2000);
+}
+
+function setTcoins(amount) {
+    document.getElementById('userStars').textContent = amount;
+}
+
+async function loadUserInfo(userId) {
+    try {
+        const res = await fetch('/api/user_info?user_id=' + userId);
+        const data = await res.json();
+        if (data.tcoins !== undefined) setTcoins(data.tcoins);
+    } catch (e) {
+        console.error('Ошибка загрузки T-коинов', e);
+    }
+}
+
+function initPromos() {
+    const bought = {};
+    document.querySelectorAll('.promo-buy-btn').forEach((btn) => {
+        btn.addEventListener('click', async function() {
+            const promoType = this.getAttribute('data-promo');
+            if (bought[promoType]) {
+                showNotification('Промокод уже получен!', false);
+                return;
+            }
+
+            if (!currentUserId) {
+                showNotification('Нет данных пользователя', false);
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '⌛ ...';
+
+            try {
+                const res = await fetch('/api/collect_promo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: currentUserId, promo_type: promoType })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    bought[promoType] = true;
+                    setTcoins(data.tcoins);
+
+                    const card = btn.closest('.promo-card');
+                    const promoDiv = document.createElement('div');
+                    promoDiv.textContent = 'КОД: ' + data.code;
+                    promoDiv.style.cssText =
+                        'background:#2a2a2a;color:var(--accent-yellow);padding:12px;border-radius:12px;' +
+                        'font-family:monospace;font-size:16px;text-align:center;margin-top:10px;' +
+                        'border:2px dashed var(--accent-yellow);font-weight:bold;';
+                    card.appendChild(promoDiv);
+
+                    btn.textContent = 'Получено ✓';
+                    btn.style.opacity = '0.5';
+                    btn.style.background = '#444';
+                    btn.style.color = '#888';
+
+                    showNotification('Успешно! -1 T-Коин', true);
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = 'Получить промокод';
+                    if (data.tcoins !== undefined) setTcoins(data.tcoins);
+                    showNotification(data.error || 'Ошибка', false);
+                }
+            } catch (e) {
+                btn.disabled = false;
+                btn.textContent = 'Получить промокод';
+                showNotification('Ошибка соединения', false);
+            }
+        });
+    });
+}
+
+function initNavigation() {
+    const links = document.querySelectorAll('footer a');
+    links.forEach((link) => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            links.forEach((l) => l.classList.remove('active'));
+            this.classList.add('active');
+            const view = this.getAttribute('data-view');
+            document.querySelectorAll('.model-view').forEach((v) => v.classList.remove('active-view'));
+            const target = document.querySelector('.model-view[data-view="' + view + '"]');
+            if (target) target.classList.add('active-view');
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    const user = tg.initDataUnsafe?.user;
+
+    if (user) {
+        currentUserId = user.id;
+        document.getElementById('userName').textContent = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+
+        const avatar = document.getElementById('userAvatar');
+        if (user.photo_url) {
+            avatar.innerHTML = `<img src="${user.photo_url}" alt="avatar">`;
+        } else {
+            avatar.textContent = user.first_name.charAt(0).toUpperCase();
+        }
+
+        loadUserInfo(currentUserId);
+    } else {
+        document.getElementById('userName').textContent = "Локальный Пользователь";
+        document.getElementById('userAvatar').textContent = "LP";
+    }
+
+    initNavigation();
+    initPromos();
+});
+</script>
+</body>
+</html>
