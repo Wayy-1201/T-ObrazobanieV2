@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: detective-app
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash start.sh
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false          
+      - key: OPENROUTER_KEY_1
+        sync: false
+      - key: OPENROUTER_KEY_2
+        sync: false
+      - key: OPENROUTER_KEY_3
+        sync: false
+      - key: DB_PATH
+        value: /var/data/five_pigs.db  
+    disk:
+      name: db-storage
+      mountPath: /var/data         
+      sizeGB: 1
