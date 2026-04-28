@@ -1,5 +1,0 @@
-flask
-pyTelegramBotAPI
-requests
-python-dotenv
-gunicorn
